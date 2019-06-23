@@ -11,7 +11,7 @@ class DBManager extends DBconn {
             return;
         }
         try {
-            this.conn.query('insert into ' + table + ' value(' + this.turnToString(value) + ')', fn)
+            this.conn.query('insert into ' + table + ' set ?', value , fn)
         } catch (error) {
             console.log(error);
         }

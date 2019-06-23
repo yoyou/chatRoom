@@ -1,14 +1,14 @@
 const mysql = require('mysql');
-// const connect = mysql.createConnection({
-//     host: 'localhost',
-//     port: 3306,
-//     user: 'zmw',
-//     password: 'zhuang93',
-//     database: 'talkroom',
-//     insecureAuth: false
-// })
+const connect = mysql.createConnection({
+    host: 'localhost',
+    port: 3306,
+    user: 'zmw',
+    password: 'zmw',
+    database: 'talkroom',
+    insecureAuth: false
+})
 
-const connect = mysql.createConnection('mysql://zmw:zhuang93@localhost:3306/talkroom');
+// const connect = mysql.createConnection('mysql://root:12345678@localhost:3306/talkroom');
 
 connect.connect();
 
@@ -18,9 +18,8 @@ connect.connect();
 //     }
 // })
 
-let a = connect.query('select * from userlist', )
+// let a = connect.query('select * from userlist')
 
-console.log(a);
 
 var option = {
     name: 'zmw',

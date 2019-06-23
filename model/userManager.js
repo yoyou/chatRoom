@@ -5,7 +5,28 @@ const TABLE = 'userlist'
 class userManager extends dbManager {
     constructor() {
         super();
+        this.init();
     }
+
+    init () {
+        this.conn.query('create table if not exists userlist('
+        + 'v_id int not null auto_increment,'
+        + 'name varchar(10) not null,'
+        + 'account varchar(10) not null,'
+        + 'password varchar(10) not null,'
+        + 'photo varchar(10),'
+        + 'primary key(v_id, account)' 
+        + ')', function (err, res, field) {
+            if (err) {
+                console.log('create table failed');
+                console.log(err);
+                return;
+            }
+            console.log('create table successful!!');
+        })
+    }
+
+
     register(user) {
         return new Promise((reslove, reject) => {
             if (user.account && user.password && user.photo && user.name) {

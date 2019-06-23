@@ -2,11 +2,64 @@ var assert = require("assert").strict;
 var userManager = require('../model/userManager');
 var dbM = require('../model/db');
 var user = new userManager();
-var db = new dbM();
-var request = require('supertest');
-var app = require('../app.js')
+// var db = new dbM();
+// var request = require('supertest');
+// var app = require('../app.js')
 
-
+describe('user', () => {
+    // describe('register', () => {
+    //     it('add user', () => {
+    //         user.register({
+    //             name: 'test',
+    //             account: 'test1',
+    //             password: 'test1',
+    //             photo: '../'
+    //         }, function(err) {
+    //             if(err) {
+    //                 assert.doesNotThrow(() => {
+    //                     console.log('>>>>> error');
+    //                 })
+    //             }
+    //         }).then((resolve) => {
+    //             console.log('register success')
+    //         }, (reject) => {
+    //             console.log(reject);               
+    //         })
+    //     })
+    // })
+    // describe('checkAuth', () => {
+    //     it('checkAuth', () => {
+    //         user.checkAuth({account: 'test1', account: 'test1', password: 'test1'}).then(reslove => {
+    //             console.log('login success')
+    //         }, (reject) => {
+    //             console.log('login error')
+    //             console.log(reject);
+    //         })
+    //     })
+    // })
+    // describe('change user message', () => {
+    //     it('change user message', (done) => {
+    //         user.updateUserMessage({account: 'test1', password: 'zmw1'}, {account: 'test1', password: 'test1'}).then(resolve => {
+    //             console.log('update success');
+    //             console.log(resolve)
+    //             done();
+    //         }, reject => {
+    //             console.log('update failed');
+    //             console.log(reject);
+    //             done();
+    //         })
+    //     })
+    // })
+    describe('delete user', () => {
+        it('delete user', () => {
+            user.deleteUserMessage({account: 'test1', password: 'zmw1'}).then(resolve => {
+                console.log('delete user successful')
+            }, reject => {
+                console.log(reject)
+            })
+        })
+    })
+})
 
 // describe('userManager', () => {
 //     describe('register', () => {
@@ -70,7 +123,7 @@ var app = require('../app.js')
 //     })
 // })
 
-describe('register', () => {
+// describe('register', () => {
     // it('register', () => {
     //     request(app).post('/register')
     //         .send({
@@ -87,16 +140,16 @@ describe('register', () => {
     //             //done();
     //         })
     // })
-    it('login', () => {
-        request(app).post('/login')
-            .send({
-                account: 'test2',
-                password: 'test2'
-            }).expect(200, function(err, res) {
-                if (err) {
-                    console.log(err);
-                }
-                console.log(res.status);
-            })
-    })
-})
+    // it('login', () => {
+    //     request(app).post('/login')
+    //         .send({
+    //             account: 'test2',
+    //             password: 'test2'
+    //         }).expect(200, function(err, res) {
+    //             if (err) {
+    //                 console.log(err);
+    //             }
+    //             console.log(res.status);
+    //         })
+    // })
+// })

@@ -1,4 +1,7 @@
 const mysql = require('mysql');
+const log4js = require('log4js');
+// const logger
+const DATABASE = 'talkroom'
 
 class dbconnect {
     constructor() {
@@ -11,7 +14,7 @@ class dbconnect {
                 host: 'localhost',
                 port: 3306,
                 user: 'zmw',
-                password: 'zhuang93',
+                password: 'zmw',
                 database: 'talkroom',
                 insecureAuth: false
             })
@@ -19,6 +22,7 @@ class dbconnect {
                 this.close();
                 console.log(err);
             })
+            dbconnect.conn.query('use ' + DATABASE);
         }
         return dbconnect.conn
     }

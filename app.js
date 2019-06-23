@@ -5,8 +5,28 @@ const body = require('koa-body');
 const route = require('koa-route');
 const KoaJwt = require('koa-jwt');
 const jwt = require('jsonwebtoken');
+// const log4js = require('log4js');
+// log4js.configure({
+//     appenders: [
+//         {
+//             type: console,
+//             category: 'console'
+//         },
+//         {
+//             type: 'dateFile',
+//             filename: 'log/logs',
+//             pattern: '_yyyyMMdd.log',
+//             category: 'loginfo'
+//         }
+//     ],
+//     replaceConsole: true,
+// })
+
+// const logger = log4js.getLogger('console');
+
+
 const util = require('util');
-const vertify = util.promisify(jwt.vertify);
+// const vertify = util.promisify(jwt.vertify);
 const userM = require('./model/userManager');
 const staticServer = require('koa-static');
 
@@ -23,9 +43,12 @@ app.use(staticServer(path.join(__dirname, 'public'), {
     extensions: true
 }));
 
-app.use(body());
+app.use(body({
+    multipart: true
+}));
 
 app.use(async(ctx, next) => {
+    console.log(ctx.method + ' ' + ctx.url)
     const start = new Date().getTime(); // 当前时间
     await next().catch((err) => {
         if (err.status == 401) {
@@ -39,13 +62,12 @@ app.use(async(ctx, next) => {
     console.log(`>>>>>>  Time: ${ms}ms`); // 打印耗费时间
 })
 
-app.use(async(ctx, next) => {
-
-})
-
 app.use(route.post('/register', async(ctx, next) => {
+    console.log('regitser:  ' + ctx.url);
     let user = ctx.request.body
-    if (user.name && user.account && user.password && 　user.photo) {
+    console.log(ctx.request);
+    console.log(user);
+    if (user.name && user.account && user.password && user.photo) {
         try {
             await userManager.register(user)
             ctx.status = 200;
@@ -55,15 +77,20 @@ app.use(route.post('/register', async(ctx, next) => {
                 name: user.name
             }, secret, { expiresIn: '1h' }))
         } catch (error) {
+            console.log(error)
             ctx.status = 400;
             ctx.response.body = "用户存在";
         }
+    }else {
+        ctx.status = 400;
+        ctx.response.body = '参数错误'
     }
 }))
 
 
 
 app.use(route.post('/login', async(ctx) => {
+    console.log('login:  ' + ctx.url);
     let user = ctx.request.body;
     if (user.account && user.password) {
         try {
@@ -88,6 +115,7 @@ app.use(route.post('/login', async(ctx) => {
 }))
 
 app.use(route.post('/userinfo', async(ctx) => { // token验证
+    console.log('userinfo:  ' + ctx.url);
     const token = ctx.header.authorization;
     let payload;
     if (token) {
